@@ -14,9 +14,9 @@
   outputs = inputs: {
     ## home-manager ##
     homeConfigurations = {
-      breaking = inputs.home-manager.lib.homeManagerConfiguration {
+      hitachi1 = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = import inputs.nixpkgs {
-          system = "aarch64-linux";
+          system = "x86_64-linux";
           # Enable unfree pkgs
           config.allowUnfree = true;
         };
