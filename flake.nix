@@ -11,23 +11,29 @@
     nixvim-config.url = "github:Myxogastria0808/nix-flakes-nixvim";
   };
 
-  outputs = inputs: {
-    ## home-manager ##
-    homeConfigurations = {
-      hitachi1 = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = import inputs.nixpkgs {
-          system = "x86_64-linux";
-          # Enable unfree pkgs
-          config.allowUnfree = true;
+  outputs =
+    inputs:
+    let
+      systems = "x86_64-linux";
+    in
+    {
+      ## home-manager ##
+      homeConfigurations = {
+        hitachi1 = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = import inputs.nixpkgs {
+            system = systems;
+            # Enable unfree pkgs
+            config.allowUnfree = true;
+          };
+          extraSpecialArgs = {
+            inherit inputs;
+            username = "hello";
+            system = systems;
+          };
+          modules = [
+            ./home/home.nix
+          ];
         };
-        extraSpecialArgs = {
-          inherit inputs;
-          username = "hello";
-        };
-        modules = [
-          ./home/home.nix
-        ];
       };
     };
-  };
 }
